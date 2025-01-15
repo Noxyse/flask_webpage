@@ -5,44 +5,112 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Contact Form</title>
+    <style>
+        .error {
+            color: red;
+            font-size: 0.9em;
+            margin-left: 10px;
+        }
+
+        .error-bubble {
+            display: inline-block;
+            background-color: #f8d7da;
+            color: #842029;
+            padding: 5px 10px;
+            border-radius: 5px;
+            margin-top: 5px;
+        }
+    </style>
 </head>
 
 <body>
     <h1>Contact Form</h1>
     <form action="/submit" method="post">
+        <input type="text" name="honeypot" style="display: none;" autocomplete="off">
+
+        <!-- Name Field -->
         <label for="name">Name:</label>
-        <input type="text" id="name" name="name" required><br>
+        <input type="text" id="name" name="name" required value="{{ form_data.get('name', '') }}">
+        {% if errors.get('name') %}
+        <span class="error">{{ errors['name'] }}</span>
+        {% endif %}
+        <br>
+
+        <!-- Surname Field -->
         <label for="surname">Surname:</label>
-        <input type="text" id="surname" name="surname" required><br>
+        <input type="text" id="surname" name="surname" required value="{{ form_data.get('surname', '') }}">
+        {% if errors.get('surname') %}
+        <span class="error">{{ errors['surname'] }}</span>
+        {% endif %}
+        <br>
+
+        <!-- Gender Radio Buttons -->
         <label for="gender">Gender:</label><br>
-        <input type="radio" id="male" name="gender" value="male" required>
+        <input type="radio" id="male" name="gender" value="male" {% if form_data.get('gender')=='male' %}checked{% endif
+            %}>
         <label for="male">Male</label>
-        <input type="radio" id="female" name="gender" value="female" required>
+        <input type="radio" id="female" name="gender" value="female" {% if form_data.get('gender')=='female' %}checked{%
+            endif %}>
         <label for="female">Female</label>
-        <input type="radio" id="other" name="gender" value="other" required>
-        <label for="other">Other</label><br>
-        <label for="email">Email:</label><br>
-        <input type="email" id="email" name="email" required><br>
-        <label for="country">Country:</label><br>
+        <input type="radio" id="other" name="gender" value="other" {% if form_data.get('gender')=='other' %}checked{%
+            endif %}>
+        <label for="other">Other</label>
+        {% if errors.get('gender') %}
+        <div class="error-bubble">{{ errors['gender'] }}</div>
+        {% endif %}
+        <br>
+
+        <!-- Email Field -->
+        <label for="email">Email:</label>
+        <input type="email" id="email" name="email" required value="{{ form_data.get('email', '') }}">
+        {% if errors.get('email') %}
+        <span class="error">{{ errors['email'] }}</span>
+        {% endif %}
+        <br>
+
+        <!-- Country Dropdown -->
+        <label for="country">Country:</label>
         <select id="country" name="country" required>
-            <option value="">Select a country</option>
-            <option value="belgium">Belgium</option>
-            <option value="canada">Canada</option>
-            <option value=france">France</option>
-            <option value="germany">Germany</option>
-            <option value="switzerland">Switzerland</option>
-            <option value="uk">United Kingdom</option>
-            <option value="usa">United States</option>
-        </select><br>
+            <option value="" disabled>Select a country</option>
+            <option value="belgium" {% if form_data.get('country')=='belgium' %}selected{% endif %}>Belgium</option>
+            <option value="canada" {% if form_data.get('country')=='canada' %}selected{% endif %}>Canada</option>
+            <option value="france" {% if form_data.get('country')=='france' %}selected{% endif %}>France</option>
+            <option value="germany" {% if form_data.get('country')=='germany' %}selected{% endif %}>Germany</option>
+            <option value="switzerland" {% if form_data.get('country')=='switzerland' %}selected{% endif %}>Switzerland
+            </option>
+            <option value="uk" {% if form_data.get('country')=='uk' %}selected{% endif %}>United Kingdom</option>
+            <option value="usa" {% if form_data.get('country')=='usa' %}selected{% endif %}>United States</option>
+        </select>
+        {% if errors.get('country') %}
+        <div class="error-bubble">{{ errors['country'] }}</div>
+        {% endif %}
+        <br>
+
+        <!-- Services Checkboxes -->
         <label for="services">Services:</label><br>
-        <input type="checkbox" id="repair" name="services" value="repair">
+        <input type="checkbox" id="repair" name="services" value="repair" {% if 'repair' in form_data.get('services',
+            []) %}checked{% endif %}>
         <label for="repair">Repair</label>
-        <input type="checkbox" id="order" name="services" value="order">
+        <input type="checkbox" id="order" name="services" value="order" {% if 'order' in form_data.get('services', [])
+            %}checked{% endif %}>
         <label for="order">Order</label>
-        <input type="checkbox" id="others" name="services" value="others">
-        <label for="others">Others</label><br>
+        <input type="checkbox" id="others" name="services" value="others" {% if 'others' in form_data.get('services',
+            []) %}checked{% endif %}>
+        <label for="others">Others</label>
+        {% if errors.get('services') %}
+        <div class="error-bubble">{{ errors['services'] }}</div>
+        {% endif %}
+        <br>
+
+        <!-- Message Field -->
         <label for="message">Message:</label><br>
-        <textarea id="message" name="message" required></textarea><br>
+        <textarea id="message" name="message" required>{{ form_data.get('message', '') }}</textarea>
+        {% if errors.get('message') %}
+        <div class="error-bubble">{{ errors['message'] }}</div>
+        {% endif %}
+        <br>
+
+        <!-- Submit Button -->
         <input type="submit" value="Submit">
     </form>
 </body>

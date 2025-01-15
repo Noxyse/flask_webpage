@@ -11,15 +11,6 @@
             font-size: 0.9em;
             margin-left: 10px;
         }
-
-        .error-bubble {
-            display: inline-block;
-            background-color: #f8d7da;
-            color: #842029;
-            padding: 5px 10px;
-            border-radius: 5px;
-            margin-top: 5px;
-        }
     </style>
 </head>
 
@@ -82,7 +73,7 @@
             <option value="usa" {% if form_data.get('country')=='usa' %}selected{% endif %}>United States</option>
         </select>
         {% if errors.get('country') %}
-        <div class="error-bubble">{{ errors['country'] }}</div>
+        <div class="error">{{ errors['country'] }}</div>
         {% endif %}
         <br>
 
@@ -98,7 +89,7 @@
             []) %}checked{% endif %}>
         <label for="others">Others</label>
         {% if errors.get('services') %}
-        <div class="error-bubble">{{ errors['services'] }}</div>
+        <div class="error">{{ errors['services'] }}</div>
         {% endif %}
         <br>
 
@@ -106,7 +97,7 @@
         <label for="message">Message:</label><br>
         <textarea id="message" name="message" required>{{ form_data.get('message', '') }}</textarea>
         {% if errors.get('message') %}
-        <div class="error-bubble">{{ errors['message'] }}</div>
+        <div class="error">{{ errors['message'] }}</div>
         {% endif %}
         <br>
 

@@ -6,7 +6,7 @@
 - Honeypot antispam feature
 
 ## Performance criteria:
-If the user makes an error, the form should be returned to them with valid responses preserved in their respective input fields.
-Ideally, display error messages near their respective fields.
-The form will perform server-side sanitization and validation.
-If sanitization and validation are successful, a "Thank you for contacting us." page will be displayed, summarizing all the encoded information.
+- If the user makes an error, the form should be returned to them with valid responses preserved in their respective input fields.
+- Ideally, display error messages near their respective fields.
+- The form will perform server-side sanitization and validation.
+- If sanitization and validation are successful, a "Thank you for contacting us." page will be displayed, summarizing all the encoded information.
